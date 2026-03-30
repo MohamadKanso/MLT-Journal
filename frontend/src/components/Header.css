@@ -1,0 +1,134 @@
+/* ── KansoTrader Header — Nothing OS ── */
+.header {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  background: var(--nt-surface);
+  border-bottom: 1px solid var(--nt-border);
+  z-index: 40;
+  flex-shrink: 0;
+  gap: 1rem;
+}
+
+/* ── Left ── */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  flex-shrink: 0;
+}
+
+.nt-logo-mark {
+  width: 26px; height: 26px;
+  border: 1.5px solid var(--nt-white);
+  border-radius: var(--r-xs);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.nt-logo-text {
+  font-family: var(--font-mono);
+  font-size: 0.5rem; font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--nt-white); line-height: 1;
+}
+.app-title {
+  font-family: var(--font-mono);
+  font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--nt-text-primary);
+}
+.header-version {
+  font-family: var(--font-mono);
+  font-size: 0.55rem; color: var(--nt-text-muted);
+  letter-spacing: 0.06em;
+  padding: 0.1rem 0.35rem;
+  border: 1px solid var(--nt-border-md);
+  border-radius: var(--r-xs);
+}
+
+/* ── Center ── */
+.header-center {
+  display: flex; align-items: center; gap: 1rem;
+}
+.live-clock {
+  font-family: var(--font-mono);
+  font-size: 0.7rem; color: var(--nt-text-secondary);
+  letter-spacing: 0.08em;
+  display: flex; align-items: center; gap: 0.45rem;
+}
+.live-clock-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--nt-red);
+  box-shadow: 0 0 6px var(--nt-red);
+  animation: pulse-dot 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+/* ── Session pill ── */
+.session-pill {
+  display: flex; align-items: center; gap: 0.35rem;
+  font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--r-xs);
+  background: color-mix(in srgb, var(--sess-color) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--sess-color) 25%, transparent);
+  color: var(--sess-color);
+}
+.session-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--sess-color);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* ── Right ── */
+.header-right {
+  display: flex; align-items: center; gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* ── Session timeline bars ── */
+.session-timeline {
+  display: flex; gap: 0.6rem; align-items: center;
+}
+.sess-bar {
+  display: flex; align-items: center; gap: 0.3rem;
+  opacity: 0.3; transition: opacity 0.3s;
+}
+.sess-bar.active { opacity: 1; }
+.sess-bar-label {
+  font-family: var(--font-mono); font-size: 0.52rem;
+  color: var(--nt-text-muted); text-transform: uppercase;
+  letter-spacing: 0.04em; min-width: 12px;
+}
+.sess-bar-track {
+  width: 40px; height: 2px;
+  background: var(--nt-surface-4); border-radius: var(--r-full);
+  overflow: hidden;
+}
+.sess-bar-fill {
+  height: 100%; border-radius: var(--r-full);
+  transition: width 2s linear;
+}
+@media (max-width: 900px) { .session-timeline { display: none; } }
+
+/* ── Theme toggle ── */
+.btn-theme-toggle {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--nt-border-md);
+  border-radius: var(--r-sm);
+  color: var(--nt-text-secondary);
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+.btn-theme-toggle:hover {
+  color: var(--nt-amber);
+  border-color: var(--nt-amber-border);
+  background: var(--nt-amber-dim);
+}

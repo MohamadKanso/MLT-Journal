@@ -1,0 +1,110 @@
+/* ── KansoTrader Sidebar — Nothing OS ── */
+.sidebar {
+  width: 64px;
+  background: var(--nt-surface);
+  border-right: 1px solid var(--nt-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.25rem 0 1rem;
+  z-index: 50;
+  flex-shrink: 0;
+}
+
+/* ── Glyph mark ── */
+.sidebar-glyph {
+  width: 36px; height: 36px;
+  margin-bottom: 2rem;
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  cursor: default;
+}
+.glyph-ring {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 1.5px solid var(--nt-border-strong);
+  position: absolute;
+}
+.glyph-dot-center {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--nt-red);
+  position: relative; z-index: 1;
+  box-shadow: 0 0 8px var(--nt-red);
+}
+
+/* ── Nav ── */
+.sidebar-nav {
+  display: flex; flex-direction: column;
+  gap: 0.125rem; width: 100%;
+  align-items: center; flex: 1;
+  padding: 0 0.5rem;
+}
+
+.nav-divider {
+  width: 32px; height: 1px;
+  background: var(--nt-border);
+  margin: 0.5rem 0;
+}
+
+.nav-item {
+  position: relative;
+  width: 100%; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--nt-text-muted);
+  border-radius: var(--r-sm);
+  transition: color 0.12s, background 0.12s;
+  text-decoration: none;
+  border: 1px solid transparent;
+  outline: none;
+}
+.nav-item:hover {
+  color: var(--nt-text-primary);
+  background: var(--nt-surface-3);
+}
+.nav-item.active {
+  color: var(--nt-text-primary);
+  background: var(--nt-surface-2);
+  border-color: var(--nt-border-md);
+}
+/* Red left accent line */
+.nav-item.active::after {
+  content: '';
+  position: absolute;
+  left: 0; top: 25%; height: 50%;
+  width: 2.5px;
+  background: var(--nt-red);
+  border-radius: 0 2px 2px 0;
+}
+
+/* ── Tooltip ── */
+.tooltip {
+  position: absolute;
+  left: calc(100% + 12px); top: 50%;
+  transform: translateY(-50%) translateX(-6px);
+  background: var(--nt-surface);
+  border: 1px solid var(--nt-border-strong);
+  color: var(--nt-text-primary);
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--r-sm);
+  font-family: var(--font-mono);
+  font-size: 0.6rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.09em;
+  white-space: nowrap;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.12s, transform 0.12s;
+  box-shadow: var(--shadow-md);
+  z-index: 100;
+}
+.nav-item:hover .tooltip {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+/* ── Bottom ── */
+.sidebar-bottom {
+  margin-top: auto;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 0.25rem;
+  padding: 0 0.5rem; width: 100%;
+}

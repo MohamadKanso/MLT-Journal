@@ -1,0 +1,22 @@
+/* ── KansoTrader App Layout ── */
+.app-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--nt-black);
+}
+
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.app-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.75rem 2rem;
+  /* No transform here so position:fixed modals always anchor to viewport */
+}
