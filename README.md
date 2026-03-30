@@ -1,22 +1,16 @@
 # KansoTrader
 
-A fully local, private trading journal web app for GBPUSD forex trading — built with Python (Flask) + SQLite.
+A clean, fully local trading journal for forex traders — built with Python (Flask) and React.
 
-> **All data stays on your machine. Nothing is sent externally. This app is 100% local and private.**
+> **100% private. All data stays on your machine. Nothing is ever sent externally.**
 
 ---
 
-## Preview
+## Live Demo
 
-![KansoTrader Dashboard](static/preview.png)
+**[→ Try the demo](https://kansotrader-demo.onrender.com)**
 
-The app runs in your browser at `http://localhost:5000` and provides:
-
-- **Live Dashboard** — equity curve, win rate, profit factor, session/weekday breakdowns
-- **Trade Journal** — log every trade with 39+ fields across 7 sections (entry, exit, psychology, review)
-- **Backtest Log** — separate table for strategy backtesting entries
-- **Analytics** — performance charts, monthly calendar grid, RR distribution
-- **MT5 Bridge** — optional live account data from MetaTrader 5 via local socket
+The demo is read-only with sample trades pre-loaded. To add your own data and use the full journal, run it locally (see below).
 
 ---
 
@@ -25,52 +19,52 @@ The app runs in your browser at `http://localhost:5000` and provides:
 **Requirements:** Python 3.9+
 
 ```bash
-# 1. Clone the repo
 git clone https://github.com/MohamadKanso/KansoTrader.git
 cd KansoTrader
-
-# 2. Install dependencies
 pip install -r requirements.txt
-
-# 3. Start the app
+python seed_trades.py   # optional: load sample trades
 python app.py
 ```
 
 Then open **http://localhost:5000** in your browser.
 
-> The database (`data/journal.db`) is created automatically on first run. Your trade data is stored locally and never leaves your machine.
+Your data is stored in `data/journal.db` (SQLite, local only).
+
+---
+
+## Features
+
+- **Dashboard** — equity curve, win rate, profit factor, session & weekday breakdowns, monthly calendar
+- **Trade Journal** — log trades with 39+ fields: entry model, psychology, screenshots, review notes
+- **Analytics** — RR distribution, performance DNA, edge analysis
+- **Backtest Log** — separate view for strategy backtesting
+- **Trash** — soft-delete with restore
+- **MT5 Bridge** — optional live account data from MetaTrader 5 (Windows only)
 
 ---
 
 ## Tech Stack
 
-- **Backend:** Python, Flask, SQLite
-- **Frontend:** Vanilla HTML/CSS/JS (single-page app, no framework)
-- **Charts:** Chart.js
-- **MT5 Integration:** Optional — requires MetaTrader 5 desktop app running locally
+| Layer | Tech |
+|-------|------|
+| Backend | Python, Flask |
+| Database | SQLite (local file) |
+| Frontend | React + Vite |
+| Charts | Chart.js |
+
+---
+
+## Deploy Your Own Demo
+
+To host a read-only demo of your journal:
+
+1. Fork this repo
+2. Go to [render.com](https://render.com) → New Web Service → connect your fork
+3. Render auto-detects `render.yaml` and deploys with `DEMO_MODE=1`
 
 ---
 
 ## Privacy
 
-This app is **fully local**. It does not:
-- Connect to any external server
-- Send any trade data anywhere
-- Require an account or login
-
-Your journal lives entirely on your machine at `data/journal.db`.
-
----
-
-## Project Structure
-
-```
-KansoTrader/
-├── app.py              # Flask backend + API routes
-├── database.py         # SQLite schema + queries
-├── mt5_bridge.py       # Optional MT5 socket bridge
-├── requirements.txt
-├── templates/          # HTML templates
-├── static/             # CSS, JS, images
-└── data/               # SQLite database (gitignored)
-```
+This app has **no accounts, no cloud sync, no analytics, no external requests**.
+Your trades live in a single file: `data/journal.db` — on your machine, under your control.

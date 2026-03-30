@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: kansotrader-demo
+    runtime: python
+    buildCommand: pip install -r requirements.txt && python seed_trades.py
+    startCommand: python app.py
+    envVars:
+      - key: DEMO_MODE
+        value: "1"
+      - key: PORT
+        value: "5000"

@@ -27,6 +27,10 @@ os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 ALLOWED = {"png", "jpg", "jpeg", "gif", "webp", "bmp"}
 def allowed(f): return "." in f and f.rsplit(".", 1)[1].lower() in ALLOWED
 
+DEMO_MODE = os.environ.get("DEMO_MODE", "0") == "1"
+def demo_block():
+    return jsonify({"error": "Read-only demo — download the app locally to add your own trades.", "demo": True}), 403
+
 MT5_BRIDGE = "http://127.0.0.1:5001"
 
 # ── Serve React SPA ───────────────────────────────────────────────────────────
@@ -53,6 +57,7 @@ def list_trades():
 
 @app.route("/api/trades", methods=["POST"])
 def create_trade():
+    if DEMO_MODE: return demo_block()
     data = request.get_json()
     if not data:
         return jsonify({"error": "No data"}), 400
@@ -67,22 +72,24 @@ def get_trade(tid):
 
 @app.route("/api/trades/<int:tid>", methods=["PUT"])
 def update_trade(tid):
+    if DEMO_MODE: return demo_block()
     data = request.get_json()
     db.update_trade(tid, data)
     return jsonify({"success": True})
 
 @app.route("/api/trades/<int:tid>", methods=["DELETE"])
 def delete_trade(tid):
-    # Soft-delete: images kept until permanently deleted from Trash
+    if DEMO_MODE: return demo_block()
     db.delete_trade(tid)
     return jsonify({"success": True})
 
 @app.route("/api/trades/bulk-delete", methods=["POST"])
 def bulk_delete_trades():
+    if DEMO_MODE: return demo_block()
     data = request.get_json()
     ids  = data.get("ids", [])
     for tid in ids:
-        db.delete_trade(tid)  # soft-delete, images stay
+        db.delete_trade(tid)
     return jsonify({"success": True, "deleted": len(ids)})
 
 # ── Trash API ─────────────────────────────────────────────────────────────────
@@ -92,11 +99,13 @@ def list_trash():
 
 @app.route("/api/trash/restore/<int:tid>", methods=["POST"])
 def restore_trade(tid):
+    if DEMO_MODE: return demo_block()
     db.restore_trade(tid)
     return jsonify({"success": True})
 
 @app.route("/api/trash/<int:tid>", methods=["DELETE"])
 def permanent_delete(tid):
+    if DEMO_MODE: return demo_block()
     t = db.get_trade(tid)  # get_trade reads by id regardless of deleted_at
     if t:
         for field in ["chart_images", "dxy_chart_images"]:
@@ -111,6 +120,7 @@ def permanent_delete(tid):
 
 @app.route("/api/trash/empty", methods=["DELETE"])
 def empty_trash():
+    if DEMO_MODE: return demo_block()
     trashed = db.get_trash()
     for t in trashed:
         for field in ["chart_images", "dxy_chart_images"]:
@@ -159,6 +169,7 @@ def text_to_speech():
 # ── Image Upload ──────────────────────────────────────────────────────────────
 @app.route("/api/upload", methods=["POST"])
 def upload_image():
+    if DEMO_MODE: return demo_block()
     if "file" not in request.files:
         return jsonify({"error": "No file"}), 400
     f = request.files["file"]
