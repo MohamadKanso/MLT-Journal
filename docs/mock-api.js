@@ -1,5 +1,4 @@
-// KansoTrader Demo Mode — intercepts /api/ calls and returns sample data
-// This file is only loaded on the GitHub Pages demo, not in local mode.
+// MLT Journal Demo Mode — intercepts /api/ calls and returns sample data
 (function () {
   const TRADES = [
     { id: 1, trade_name: 'GBPUSD London Sweep + CHOCH', date: '2025-10-07', weekday: 'Tuesday', time_of_trade: '08:22', session: 'London', pairs: 'GBPUSD', position: 'Short', trade_type: 'Backtest', account_type: 'Demo', entry_model: 'CHOCH', trade_direction_type: 'Trend Continuation', setup_quality: 'A+', rr: 2.4, profit_pct: 2.4, result: 'Take-Profit', grade: 'A+', trading_rules: 'Rules Followed', risk_pct: '1', htf_weak_structure: 'Yes', break_of_structure: 'Internal', why_grade: 'Clean sweep of BSL, immediate CHOCH, DXY confirmed bearish, perfect 5M OFC entry.', psycho: 'Very calm. Waited for all confluences.', review_lesson: 'This is what A+ looks like. Patience at key zone.', emotions: '["Focused","Confident"]', confluence_tags: '["BSL Swept","HTF Bearish","DXY Rising","London Open"]', chart_images: '[]', dxy_chart_images: '[]', deleted_at: null },
@@ -71,7 +70,6 @@
 
     if (!path.startsWith('/api/')) return _fetch(url, opts);
 
-    // Block writes
     if (['POST', 'PUT', 'DELETE', 'PATCH'].includes(method)) {
       return Promise.resolve(new Response(JSON.stringify(DEMO_RESP), { status: 403, headers: { 'Content-Type': 'application/json' } }));
     }

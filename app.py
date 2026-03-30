@@ -233,7 +233,7 @@ def live_disconnect():
 
 if __name__ == "__main__":
     print("\n  ╔═══════════════════════════════╗")
-    print("  ║   KANSO TRADER  v2.0          ║")
+    print("  ║   MLT JOURNAL  v2.0          ║")
     print("  ║   http://localhost:5000        ║")
     print("  ╚═══════════════════════════════╝\n")
     app.run(debug=False, port=5000, host="0.0.0.0")

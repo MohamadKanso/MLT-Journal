@@ -1,4 +1,4 @@
-# KansoTrader
+# MLT Journal
 
 A clean, fully local trading journal for forex traders — built with Python (Flask) and React.
 
@@ -8,7 +8,7 @@ A clean, fully local trading journal for forex traders — built with Python (Fl
 
 ## Live Demo
 
-**[→ Try the demo](https://mohamadkanso.github.io/KansoTrader/)**
+**[→ Try the demo](https://mohamadkanso.github.io/MLT-Journal/)**
 
 The demo is read-only with sample trades pre-loaded. To add your own data and use the full journal, run it locally (see below).
 
@@ -19,8 +19,8 @@ The demo is read-only with sample trades pre-loaded. To add your own data and us
 **Requirements:** Python 3.9+
 
 ```bash
-git clone https://github.com/MohamadKanso/KansoTrader.git
-cd KansoTrader
+git clone https://github.com/MohamadKanso/MLT-Journal.git
+cd MLT-Journal
 pip install -r requirements.txt
 python seed_trades.py   # optional: load sample trades
 python app.py

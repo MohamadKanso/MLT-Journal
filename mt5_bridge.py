@@ -1,5 +1,5 @@
 """
-KansoTrader MT5 Bridge
+MLT Journal MT5 Bridge
 Runs as a separate process. Exposes REST API on port 5001.
 Supports login with credentials via POST /connect
 """

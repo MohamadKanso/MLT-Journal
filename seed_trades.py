@@ -1,5 +1,5 @@
 """
-Seed KansoTrader with realistic example trades.
+Seed MLT Journal with realistic example trades.
 Clears existing trades first.
 Run: python seed_trades.py
 """

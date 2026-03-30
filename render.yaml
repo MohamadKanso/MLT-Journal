@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: kansotrader-demo
+    name: mlt-journal-demo
     runtime: python
     buildCommand: pip install -r requirements.txt && python seed_trades.py
     startCommand: python app.py

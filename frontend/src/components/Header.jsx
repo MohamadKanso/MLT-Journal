@@ -45,9 +45,9 @@ export default function Header() {
       {/* Left: Brand */}
       <div className="header-left">
         <div className="nt-logo-mark">
-          <span className="nt-logo-text">KT</span>
+          <span className="nt-logo-text">MLT</span>
         </div>
-        <span className="app-title">KansoTrader</span>
+        <span className="app-title">MLT Journal</span>
         <span className="header-version">v2.0</span>
       </div>
 
