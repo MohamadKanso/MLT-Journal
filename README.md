@@ -8,7 +8,7 @@ A clean, fully local trading journal for forex traders — built with Python (Fl
 
 ## Live Demo
 
-**[→ Try the demo](https://kansotrader-demo.onrender.com)**
+**[→ Try the demo](https://mohamadkanso.github.io/KansoTrader/)**
 
 The demo is read-only with sample trades pre-loaded. To add your own data and use the full journal, run it locally (see below).
 
