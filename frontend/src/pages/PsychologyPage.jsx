@@ -222,11 +222,34 @@ function VoiceGuide() {
   const stopAll = useCallback(() => {
     if (audioRef.current) { audioRef.current.pause(); audioRef.current.src = ''; audioRef.current = null; }
     clearTimeout(timerRef.current);
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
   }, []);
 
   useEffect(() => () => { stopAll(); statusRef.current = 'idle'; }, [stopAll]);
 
-  // Fetch one phrase from backend TTS and play it, then chain to next
+  // Web Speech API fallback — uses best available neural/Microsoft/Google voice
+  const speakWebSpeech = (text) => new Promise((resolve) => {
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.rate  = 0.88;
+    utter.pitch = 1;
+    const pick = () => {
+      const voices = window.speechSynthesis.getVoices();
+      const best = voices.find(v => v.name.includes('Neural') && v.lang.startsWith('en'))
+        || voices.find(v => v.name.includes('Microsoft') && v.lang.startsWith('en'))
+        || voices.find(v => v.name === 'Google US English')
+        || voices.find(v => v.lang === 'en-US')
+        || voices.find(v => v.lang.startsWith('en'));
+      if (best) utter.voice = best;
+      utter.onend  = resolve;
+      utter.onerror = resolve;
+      window.speechSynthesis.speak(utter);
+    };
+    // Voices may not be ready yet on first call
+    if (window.speechSynthesis.getVoices().length) { pick(); }
+    else { window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.onvoiceschanged = null; pick(); }; }
+  });
+
+  // Speak one phrase: try backend edge-tts (Microsoft Aria Neural), fall back to Web Speech API
   const speakPhrase = useCallback(async (sess, idx) => {
     if (statusRef.current !== 'playing') return;
     if (idx >= sess.script.length) {
@@ -238,34 +261,39 @@ function VoiceGuide() {
     setPhraseIdx(idx);
     const { text, pause = 1800 } = sess.script[idx];
 
+    let spoken = false;
+
+    // 1. Try backend edge-tts (Microsoft Aria Neural — best quality)
     try {
       const res = await fetch('/api/tts', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ text, voice: TTS_VOICE }),
       });
-      if (!res.ok) throw new Error('TTS request failed');
-      const blob = await res.blob();
+      if (res.ok) {
+        const blob = await res.blob();
+        if (statusRef.current !== 'playing') return;
+        const url   = URL.createObjectURL(blob);
+        const audio = new Audio(url);
+        audioRef.current = audio;
+        await new Promise((resolve) => {
+          audio.onended = () => { URL.revokeObjectURL(url); resolve(); };
+          audio.onerror = () => { URL.revokeObjectURL(url); resolve(); };
+          audio.play().catch(resolve);
+        });
+        spoken = true;
+      }
+    } catch { /* fall through */ }
 
+    // 2. Fall back to Web Speech API (works in demo / when edge-tts not installed)
+    if (!spoken && 'speechSynthesis' in window) {
       if (statusRef.current !== 'playing') return;
-
-      const url   = URL.createObjectURL(blob);
-      const audio = new Audio(url);
-      audioRef.current = audio;
-
-      await new Promise((resolve) => {
-        audio.onended = () => { URL.revokeObjectURL(url); resolve(); };
-        audio.onerror = () => { URL.revokeObjectURL(url); resolve(); };
-        audio.play().catch(() => resolve());
-      });
-
-      if (statusRef.current !== 'playing') return;
-      timerRef.current = setTimeout(() => speakPhrase(sess, idx + 1), pause);
-    } catch {
-      // On error, skip phrase and continue
-      if (statusRef.current !== 'playing') return;
-      timerRef.current = setTimeout(() => speakPhrase(sess, idx + 1), 600);
+      await speakWebSpeech(text);
+      spoken = true;
     }
+
+    if (statusRef.current !== 'playing') return;
+    timerRef.current = setTimeout(() => speakPhrase(sess, idx + 1), pause);
   }, []);
 
   const start = (sess) => {
