@@ -13,6 +13,42 @@
     <link rel="stylesheet" crossorigin href="/MLT-Journal/assets/index-_3YhWtT7.css">
   </head>
   <body>
+    <aside class="public-demo-notice" role="note" aria-label="Public demo privacy notice">
+      <strong>PUBLIC PORTFOLIO DEMO</strong>
+      <span>Fictional sample data only · No personal trading records</span>
+    </aside>
     <div id="root"></div>
+    <style>
+      .public-demo-notice {
+        position: fixed;
+        right: 16px;
+        bottom: 16px;
+        z-index: 10000;
+        display: grid;
+        gap: 3px;
+        max-width: min(330px, calc(100vw - 32px));
+        padding: 10px 13px;
+        border: 1px solid rgba(134, 59, 255, .45);
+        border-radius: 8px;
+        color: #ded8e8;
+        background: rgba(18, 16, 24, .94);
+        box-shadow: 0 12px 36px rgba(0, 0, 0, .3);
+        font: 10px/1.35 "Space Mono", monospace;
+        letter-spacing: .03em;
+        backdrop-filter: blur(12px);
+      }
+      .public-demo-notice strong {
+        color: #a970ff;
+        font-size: 9px;
+        letter-spacing: .12em;
+      }
+      @media (max-width: 640px) {
+        .public-demo-notice {
+          right: 10px;
+          bottom: 10px;
+          max-width: calc(100vw - 20px);
+        }
+      }
+    </style>
   </body>
 </html>

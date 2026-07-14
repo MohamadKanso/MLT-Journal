@@ -10,7 +10,7 @@ A clean, fully local trading journal for forex traders — built with Python (Fl
 
 **[→ Try the demo](https://mohamadkanso.github.io/MLT-Journal/)**
 
-The demo is read-only with sample trades pre-loaded. To add your own data and use the full journal, run it locally (see below).
+The public demo is read-only and uses clearly labelled, fully fictional records. It contains no personal trades, account details, screenshots, psychology notes, or journal entries. To add your own data and use the full journal, run it locally (see below).
 
 ---
 
